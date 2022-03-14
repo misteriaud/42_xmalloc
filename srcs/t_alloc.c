@@ -6,15 +6,15 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:31:02 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 18:39:55 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/14 20:32:50 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libmemory.h"
+#include "libmemory.h"
 
-t_alloc **get_first_alloc(int group)
+t_alloc	**get_first_alloc(int group)
 {
-	t_node *node;
+	t_node	*node;
 
 	node = get_node(group);
 	if (!node)
@@ -22,9 +22,9 @@ t_alloc **get_first_alloc(int group)
 	return (&node->first);
 }
 
-t_alloc *new_alloc(t_alloc **first, size_t size)
+t_alloc	*new_alloc(t_alloc **first, size_t size)
 {
-	t_alloc *dest;
+	t_alloc	*dest;
 
 	dest = malloc(sizeof(*dest));
 	if (!dest)
@@ -41,16 +41,18 @@ t_alloc *new_alloc(t_alloc **first, size_t size)
 	return (dest);
 }
 
-void Xfree(int group, void *ptr)
+void	xfree(int group, void *ptr)
 {
 	t_alloc	**first;
-	t_alloc *curr;
+	t_alloc	*curr;
 	t_alloc	*to_remove;
 
 	first = get_first_alloc(group);
 	if (!first)
 		return ;
-	if (*first && (*first)->ptr == ptr)
+	if (*first && (*first)->ptr == ptr && !(*first)->next)
+		return (xfree_group(group));
+	else if (*first && (*first)->ptr == ptr)
 	{
 		to_remove = *first;
 		*first = to_remove->next;
@@ -60,7 +62,7 @@ void Xfree(int group, void *ptr)
 	curr = *first;
 	while (curr && curr->next && curr->next->ptr != ptr)
 		curr = curr->next;
-	if (!curr || !curr->next || !curr->next->ptr != ptr)
+	if (!curr || !curr->next || curr->next->ptr != ptr)
 		return ;
 	to_remove = curr->next;
 	free(to_remove->ptr);
@@ -68,9 +70,9 @@ void Xfree(int group, void *ptr)
 	free(to_remove);
 }
 
-void Xfree_allocs(t_alloc *first)
+void	xfree_allocs(t_alloc *first)
 {
-	t_alloc *to_remove;
+	t_alloc	*to_remove;
 
 	while (first)
 	{

@@ -1,6 +1,7 @@
 NAME=libmemory.a
 SRCSDIR=srcs
-SRCS=ft_bzero.c  ft_memcpy.c  t_alloc.c  t_node.c  Xmalloc.c
+OBJSDIR=objs
+SRCS=ft_bzero.c  ft_memcpy.c  t_alloc.c  t_node.c  libmemory.c
 OBJS=$(SRCS:%.c=$(OBJSDIR)/%.o)
 CC = gcc
 FLAGS = -Wall -Wextra -Werror -g

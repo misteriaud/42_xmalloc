@@ -1,0 +1,4 @@
+libmemory.a
+/objs
+/tests
+.vscode

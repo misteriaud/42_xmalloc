@@ -6,13 +6,13 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:30:25 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 18:37:27 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/14 20:30:46 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libmemory.h"
+#include "libmemory.h"
 
-t_node	**get_first_node()
+t_node	**get_first_node(void)
 {
 	static t_node	*first;
 
@@ -21,7 +21,7 @@ t_node	**get_first_node()
 
 t_node	*new_node(t_node **first, int group)
 {
-	t_node *dest;
+	t_node	*dest;
 
 	dest = malloc(sizeof(*dest));
 	if (!dest)
@@ -46,10 +46,10 @@ t_node	*get_node(int group)
 			return (curr);
 		curr = curr->next;
 	}
-	return(new_node(first, group));
+	return (new_node(first, group));
 }
 
-void Xfree_group(int group)
+void	xfree_group(int group)
 {
 	t_node	**first;
 	t_node	*curr;
@@ -60,7 +60,7 @@ void Xfree_group(int group)
 	{
 		to_remove = *first;
 		*first = to_remove->next;
-		Xfree_allocs(to_remove->first);
+		xfree_allocs(to_remove->first);
 		free(to_remove);
 		return ;
 	}
@@ -71,6 +71,6 @@ void Xfree_group(int group)
 		return ;
 	to_remove = curr->next;
 	curr->next = to_remove->next;
-	Xfree_allocs(to_remove->first);
+	xfree_allocs(to_remove->first);
 	free(to_remove);
 }

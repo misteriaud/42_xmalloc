@@ -6,15 +6,15 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:07:19 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 18:45:13 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/14 20:32:06 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./libmemory.h"
+#include "libmemory.h"
 
-void	*Xmalloc(size_t size, int group, t_bool set2zero)
+void	*xmalloc(size_t size, int group, t_bool set2zero)
 {
-	t_alloc **first;
+	t_alloc	**first;
 	t_alloc	*dest;
 
 	first = get_first_alloc(group);
@@ -26,15 +26,15 @@ void	*Xmalloc(size_t size, int group, t_bool set2zero)
 	return (dest->ptr);
 }
 
-void	*Xrealloc(int group, void *ptr, size_t size, t_bool set2zero)
+void	*xrealloc(int group, void *ptr, size_t size, t_bool set2zero)
 {
-	t_alloc **first;
-	t_alloc *curr;
+	t_alloc	**first;
+	t_alloc	*curr;
 	t_alloc	*dest;
 
 	first = get_first_alloc(group);
 	curr = *first;
-	while(curr && curr->ptr != ptr)
+	while (curr && curr->ptr != ptr)
 		curr = curr->next;
 	if (!curr)
 		return (NULL);
@@ -47,7 +47,7 @@ void	*Xrealloc(int group, void *ptr, size_t size, t_bool set2zero)
 	return (dest->ptr);
 }
 
-void Xfree_all()
+void	xfree_all(void)
 {
 	t_node	**first;
 	t_node	*to_remove;
@@ -59,8 +59,7 @@ void Xfree_all()
 	{
 		to_remove = *first;
 		*first = to_remove->next;
-		Xfree_group(to_remove->group);
+		xfree_allocs(to_remove->first);
 		free(to_remove);
 	}
 }
-
