@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Xmalloc.c                                          :+:      :+:    :+:   */
+/*   libmemory.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:07:19 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 20:32:06 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/14 23:54:22 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	*xrealloc(int group, void *ptr, size_t size, t_bool set2zero)
 	t_alloc	*curr;
 	t_alloc	*dest;
 
+	if (!ptr)
+		return (xmalloc(size, group, set2zero));
 	first = get_first_alloc(group);
 	curr = *first;
 	while (curr && curr->ptr != ptr)
