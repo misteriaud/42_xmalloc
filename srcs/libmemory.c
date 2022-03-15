@@ -6,13 +6,13 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:07:19 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 23:54:22 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/15 15:46:44 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libmemory.h"
 
-void	*xmalloc(size_t size, int group, t_bool set2zero)
+int	xmalloc(void **ptr, size_t size, int group)
 {
 	t_alloc	**first;
 	t_alloc	*dest;
@@ -20,33 +20,34 @@ void	*xmalloc(size_t size, int group, t_bool set2zero)
 	first = get_first_alloc(group);
 	dest = new_alloc(first, size);
 	if (!dest)
-		return (NULL);
-	if (set2zero)
-		ft_bzero(dest->ptr, size);
-	return (dest->ptr);
+		return (0);
+	ft_bzero(dest->ptr, size);
+	*ptr = dest->ptr;
+	return (1);
 }
 
-void	*xrealloc(int group, void *ptr, size_t size, t_bool set2zero)
+int	xrealloc(void **ptr, size_t size, int group)
 {
 	t_alloc	**first;
 	t_alloc	*curr;
 	t_alloc	*dest;
 
-	if (!ptr)
-		return (xmalloc(size, group, set2zero));
+	if (!*ptr)
+		return (xmalloc(ptr, size, group));
 	first = get_first_alloc(group);
 	curr = *first;
-	while (curr && curr->ptr != ptr)
+	while (curr && curr->ptr != *ptr)
 		curr = curr->next;
 	if (!curr)
-		return (NULL);
+		return (xmalloc(ptr, size, group));
 	dest = new_alloc(first, size + curr->size);
 	if (!dest)
-		return (NULL);
+		return (0);
 	ft_memcpy(dest->ptr, curr->ptr, curr->size);
-	if (set2zero)
-		ft_bzero(dest->ptr + curr->size, size);
-	return (dest->ptr);
+	ft_bzero(dest->ptr + curr->size, size);
+	*ptr = dest->ptr;
+	xfree(group, curr->ptr);
+	return (1);
 }
 
 void	xfree_all(void)
