@@ -67,7 +67,7 @@ void	xfree_group(int group)
 	curr = *first;
 	while (curr && curr->next->group != group)
 		curr = curr->next;
-	if (!curr->next)
+	if (curr && !curr->next)
 		return ;
 	to_remove = curr->next;
 	curr->next = to_remove->next;
