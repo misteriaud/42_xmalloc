@@ -6,7 +6,7 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 20:35:25 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/16 17:09:38 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/17 11:14:59 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	xfree_allocs(t_alloc *first);
 // libmemory.c
 int		xmalloc(void *ptr, size_t size, int group);
 int		xrealloc(void *ptr, size_t size, int group);
-void	xfree(int group, void *ptr);
+void	xfree(void *ptr, int group);
 void	xfree_group(int group);
 void	xfree_all(void);
 

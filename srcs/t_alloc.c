@@ -6,7 +6,7 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:31:02 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/14 20:32:50 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/17 11:16:03 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_alloc	*new_alloc(t_alloc **first, size_t size)
 	return (dest);
 }
 
-void	xfree(int group, void *ptr)
+void	xfree(void *ptr, int group)
 {
 	t_alloc	**first;
 	t_alloc	*curr;

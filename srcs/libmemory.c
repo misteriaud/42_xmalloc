@@ -6,7 +6,7 @@
 /*   By: mriaud <mriaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 11:07:19 by mriaud            #+#    #+#             */
-/*   Updated: 2022/03/16 17:07:36 by mriaud           ###   ########.fr       */
+/*   Updated: 2022/03/17 13:30:56 by mriaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ int	xrealloc(void *ptr, size_t size, int group)
 		curr = curr->next;
 	if (!curr)
 		return (xmalloc(ptr, size, group));
-	dest = malloc(size + curr->size);
+	dest = malloc(size);
 	if (!dest)
 		return (0);
-	ft_memcpy(curr->ptr, dest, curr->size);
-	ft_bzero(dest + curr->size, size);
+	ft_memcpy(dest, curr->ptr, curr->size);
+	ft_bzero(dest + curr->size, size - curr->size);
 	free(curr->ptr);
 	curr->ptr = dest;
+	curr->size = size;
 	*data = curr->ptr;
 	return (1);
 }

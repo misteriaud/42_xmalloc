@@ -1,4 +1,5 @@
 libmemory.a
+unit_test
 /objs
 /tests
 .vscode
