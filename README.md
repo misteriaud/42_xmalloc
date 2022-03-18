@@ -19,6 +19,7 @@ make -C libmemory
 // Pour allouer de la memoire :
 int		xmalloc(void *ptr, size_t size, int group);
 int		xrealloc(void *ptr, size_t size, int group);
+int		xmore(void *ptr, size_t size, int group);
 
 // Pour liberer la memoire allouée
 void	xfree(void *ptr, int group);
@@ -27,7 +28,7 @@ void	xfree_all(void);
 ```
 ##### Args:
 1. `void *ptr` attend un pointeur sur le pointeur qu'on veut allouer
-2. `size_t size` est la taille en byte à allouer
+2. `size_t size` est la taille en byte à allouer (pour `xmalloc` et `xrealloc` elle exprimée en valeur absolue, pour `xmore` en valeur relative par rapport à la memoire déjà allouée)
 3. `int group` permet de regrouper des allocations pour pouvoir les libérer par lot ensuite, c'est en identifiant attribué librement (*entre INT_MIN et INT_MAX*)
 
 ##### Valeur de retour:
@@ -65,4 +66,14 @@ int main(int ac, char **av)
         printf("Concatenation des arguments : %s\n", catav);
         return (0);
 }
+```
+
+***
+
+#### Fonctions utilisées:
+```C
+#include <stdlib.h>
+
+void *malloc(size_t size);
+void free(void *ptr);
 ```
