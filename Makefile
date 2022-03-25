@@ -9,7 +9,7 @@ CC = gcc
 FLAGS = -Wall -Wextra -Werror -g
 HDRS= includes
 
-all: $(TESTNAME) $(NAME)
+all: $(NAME)
 
 $(NAME): ${OBJS}
 	@echo "// BUILDING $(NAME) //"
